@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Notícia — Pulso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="article.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container masthead">
+        <a class="brand" href="index.html"><span class="brand-mark">P<span>.</span></span><span class="brand-copy"><strong data-site-name>PULSO</strong><small data-site-tagline>JORNALISMO DAQUI</small></span></a>
+        <a class="subscribe-button" href="index.html">← Voltar ao início</a>
+      </div>
+    </header>
+    <main class="container article-page">
+      <a class="article-back" href="index.html">← Todas as notícias</a>
+      <p class="article-status" role="status" aria-live="polite">Carregando notícia…</p>
+      <div class="article-layout" hidden>
+        <article class="article-content">
+          <p class="article-byline">Por <span data-article-author>Pulso</span> · <time data-article-date></time></p>
+          <h1 data-article-title></h1>
+          <img class="article-image" data-article-image alt="" hidden>
+          <p class="article-excerpt" data-article-excerpt></p>
+          <div class="article-body" data-article-body></div>
+          <a class="article-attachment" data-article-file hidden>Baixar arquivo <span>↓</span></a>
+        </article>
+        <aside class="sponsor-sidebar" data-sponsor-sidebar aria-label="Publicidade" hidden>
+          <span>PUBLICIDADE</span>
+          <a data-sponsor-link target="_blank" rel="noopener noreferrer">
+            <img data-sponsor-image alt="">
+          </a>
+        </aside>
+      </div>
+    </main>
+    <script src="article-format.js"></script>
+    <script src="article.js"></script>
+  </body>
+</html>

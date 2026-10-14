@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Pulso — jornalismo local, informação e histórias da nossa região.">
+    <title>Pulso — Notícias da região</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <div class="utility-bar">
+      <div class="container utility-inner">
+        <p data-current-date></p>
+        <div class="utility-links"><a href="#sobre">Sobre nós</a><a href="#contato">Contato</a><a href="#newsletter">Receba as notícias</a></div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container masthead">
+        <button class="icon-button menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <a class="brand" href="#" aria-label="Pulso, página inicial">
+          <span class="brand-mark" aria-hidden="true">P<span>.</span></span>
+          <span class="brand-copy"><strong data-site-name>PULSO</strong><small data-site-tagline>JORNALISMO DAQUI</small></span>
+        </a>
+        <p class="masthead-note" data-site-note>A notícia perto de você.</p>
+        <div class="header-actions">
+          <button class="icon-button search-toggle" aria-label="Abrir busca" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+          </button>
+          <a class="subscribe-button" href="#newsletter">Acompanhe <span>→</span></a>
+          <a class="admin-link" href="admin.html">Admin</a>
+        </div>
+      </div>
+      <nav class="primary-nav" aria-label="Navegação principal">
+        <div class="container nav-inner">
+          <a class="nav-home active" href="#">Início</a>
+          <a href="#ultimas">Últimas</a>
+          <a href="#cidade">Cidade</a>
+          <a href="#regiao">Região</a>
+          <a href="#politica">Política</a>
+          <a href="#economia">Economia</a>
+          <a href="#esportes">Esportes</a>
+          <a href="#cultura">Cultura</a>
+          <a href="#servicos">Serviços</a>
+        </div>
+      </nav>
+      <form class="search-panel" role="search">
+        <div class="container search-inner">
+          <label class="sr-only" for="site-search">Buscar notícias</label>
+          <input id="site-search" type="search" placeholder="O que você quer encontrar?">
+          <button type="submit">Buscar <span>→</span></button>
+        </div>
+      </form>
+    </header>
+
+    <main>
+      <section class="container breaking" id="ultimas" aria-label="Destaque do momento">
+        <span class="breaking-label"><span class="live-dot"></span> AGORA</span>
+        <p data-breaking-text>Confira as principais atualizações e histórias da nossa região</p>
+        <a href="#destaque">Leia mais <span>→</span></a>
+      </section>
+
+      <section class="container lead-grid" id="destaque">
+        <article class="lead-story">
+          <img data-hero-image src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=85" alt="Céu colorido no fim da tarde sobre a cidade">
+          <div class="lead-shade"></div>
+          <div class="lead-content">
+            <span class="eyebrow"><i></i> <span data-hero-category>CIDADE</span></span>
+            <h1 data-hero-title>Uma cidade que se transforma começa pelas pessoas</h1>
+            <p data-hero-excerpt>Iniciativas locais mostram como boas ideias podem mudar a rotina de todo mundo.</p>
+            <a class="read-link" href="#cidade">Leia a matéria <span>↗</span></a>
+          </div>
+          <span class="image-credit">Foto: Acervo editorial</span>
+        </article>
+      </section>
+
+      <section class="container latest-section" id="cidade">
+        <div class="section-heading section-heading-large">
+          <div><span class="section-kicker">INFORMAÇÃO QUE IMPORTA</span><h2>Últimas notícias</h2></div>
+          <a href="#ultimas" class="all-link">Ver todas <span>→</span></a>
+        </div>
+        <p class="data-status" role="status" aria-live="polite">Carregando notícias…</p>
+        <div class="news-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="community-band" id="regiao">
+        <div class="container community-inner">
+          <div><span class="section-kicker">FEITO COM A COMUNIDADE</span><h2>Boas histórias merecem ser contadas.</h2><p>Conhece uma pauta importante? Ajude a gente a mostrar o que acontece por aqui.</p></div>
+          <a class="outline-button" href="mailto:redacao@pulso.local">Envie sua sugestão <span>↗</span></a>
+        </div>
+      </section>
+
+      <section class="container categories-section">
+        <div class="section-heading section-heading-large">
+          <div><span class="section-kicker">MAIS PARA ACOMPANHAR</span><h2>Outros olhares</h2></div>
+        </div>
+        <div class="category-grid">
+          <a class="category-card" id="politica" href="#politica"><span class="category-icon">01</span><span><small>ENTENDA O QUE MUDA</small><strong>Política</strong></span><span class="category-arrow">↗</span></a>
+          <a class="category-card" id="esportes" href="#esportes"><span class="category-icon">02</span><span><small>PAIXÃO DA NOSSA GENTE</small><strong>Esportes</strong></span><span class="category-arrow">↗</span></a>
+          <a class="category-card" id="servicos" href="#servicos"><span class="category-icon">03</span><span><small>ÚTIL NO DIA A DIA</small><strong>Serviços</strong></span><span class="category-arrow">↗</span></a>
+        </div>
+      </section>
+
+      <section class="newsletter" id="newsletter">
+        <div class="container newsletter-inner">
+          <div><span class="section-kicker">A NOTÍCIA NA SUA CAIXA DE ENTRADA</span><h2>Fique por dentro.</h2><p>Receba uma seleção das principais notícias. Sem excesso, só o que importa.</p></div>
+          <form class="newsletter-form">
+            <label class="sr-only" for="email">Seu e-mail</label>
+            <input id="email" type="email" placeholder="Seu melhor e-mail" required>
+            <button type="submit">Quero receber <span>→</span></button>
+            <small>Ao se inscrever, você concorda em receber nossos informativos.</small>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer id="sobre">
+      <div class="container footer-main">
+        <a class="brand footer-brand" href="#"><span class="brand-mark">P<span>.</span></span><span class="brand-copy"><strong data-site-name>PULSO</strong><small data-site-tagline>JORNALISMO DAQUI</small></span></a>
+        <p>Jornalismo próximo, independente e feito para quem vive a região.</p>
+        <div class="footer-links" id="contato"><a href="#sobre">Sobre</a><a href="#contato">Fale com a redação</a><a href="#newsletter">Newsletter</a></div>
+      </div>
+      <div class="container footer-bottom"><span>© 2026 Pulso. Um projeto editorial independente. <span data-site-version></span></span><span>Informação local, com respeito e responsabilidade.</span></div>
+    </footer>
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="article-format.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

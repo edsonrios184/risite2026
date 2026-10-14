@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0c0d0f">
+    <title>Painel administrativo — Pulso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body class="admin-body">
+    <header class="admin-topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">P<span>.</span></span>
+        <span class="brand-copy"><strong>PULSO</strong><small>PAINEL EDITORIAL</small></span>
+      </a>
+      <div class="admin-top-actions">
+        <a href="index.html">← Ver site</a>
+        <button class="admin-button secondary" id="logout-button" type="button" hidden>Sair</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="login-card" id="login-view">
+        <span class="section-kicker">ÁREA RESTRITA</span>
+        <h1>Acesso ao painel</h1>
+        <p>Entre com a senha do administrador para editar o conteúdo do site.</p>
+        <form id="login-form">
+          <label for="admin-password">Senha de administrador</label>
+          <input id="admin-password" type="password" autocomplete="current-password" required>
+          <button class="admin-button" type="submit">Entrar no painel <span>→</span></button>
+        </form>
+        <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="dashboard-view" hidden>
+        <div class="dashboard-heading">
+          <div><span class="section-kicker">GERENCIAMENTO DO SITE</span><h1>Seu espaço editorial.</h1><p>Escreva, formate e publique suas notícias.</p></div>
+          <div class="dashboard-actions">
+            <button class="admin-button secondary" id="homepage-settings-button" type="button">Editar página inicial</button>
+            <button class="admin-button secondary" id="sponsor-settings-button" type="button">Editar patrocínio</button>
+            <a class="admin-button secondary" href="index.html" target="_blank" rel="noopener">Abrir site ↗</a>
+          </div>
+        </div>
+
+        <details class="admin-panel sponsor-settings-disclosure">
+          <summary><span class="section-kicker">ANÚNCIO</span><strong>Patrocínio nas páginas de notícia</strong></summary>
+          <form id="sponsor-form" class="editor-form">
+            <div class="form-grid">
+              <label class="wide">Imagem do patrocinador (URL)<input name="sponsor_image_url" type="url" placeholder="https://..."></label>
+              <label class="upload-field wide">Ou envie a imagem do patrocinador<input name="sponsor_image_file" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+              <label class="wide">Link ao clicar no anúncio (opcional)<input name="sponsor_link_url" type="url" placeholder="https://..."></label>
+            </div>
+            <p class="sponsor-size-hint">Tamanho recomendado: 300 × 180 px. O anúncio aparece à direita das notícias em telas grandes.</p>
+            <div class="form-actions"><button class="admin-button" type="submit">Salvar patrocínio <span>✓</span></button><span class="form-message" id="sponsor-message" role="status"></span></div>
+          </form>
+        </details>
+
+        <details class="admin-panel settings-disclosure">
+          <summary><span class="section-kicker">OPCIONAL</span><strong>Configurações da capa e do site</strong></summary>
+          <form id="settings-form" class="editor-form">
+            <div class="form-grid">
+              <label>Nome do site<input name="site_name" maxlength="40" required></label>
+              <label>Assinatura<input name="site_tagline" maxlength="70" required></label>
+              <label class="wide">Frase curta do cabeçalho<input name="site_note" maxlength="100"></label>
+              <label class="wide">Texto da faixa de destaque<input name="breaking_text" maxlength="160" required></label>
+              <label>Título principal<input name="hero_title" maxlength="150" required></label>
+              <label>Categoria da capa<input name="hero_category" maxlength="40" required></label>
+              <label class="wide">Resumo da capa<textarea name="hero_excerpt" rows="3" maxlength="300" required></textarea></label>
+              <label class="wide">Imagem da capa (URL)<input name="hero_image_url" type="url" placeholder="https://..."></label>
+              <label class="upload-field wide">Ou envie uma imagem para a capa<input name="hero_image_file" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+              <label>Cor de destaque<input name="accent_color" type="color" value="#f0a52b"></label>
+            </div>
+            <div class="form-actions"><button class="admin-button" type="submit">Salvar página inicial <span>✓</span></button><span class="form-message" id="settings-message" role="status"></span></div>
+          </form>
+        </details>
+
+        <section class="admin-panel">
+          <div class="panel-heading">
+            <div><span class="section-kicker">REDAÇÃO</span><h2 id="article-form-title">Nova notícia</h2></div>
+            <button class="admin-button secondary" id="new-article-button" type="button">+ Nova notícia</button>
+          </div>
+          <form id="article-form" class="editor-form">
+            <input name="id" type="hidden">
+            <input name="slug" type="hidden">
+            <input name="excerpt" type="hidden">
+            <div class="form-grid article-editor-fields">
+              <label class="wide">Título<input name="title" maxlength="150" required></label>
+              <label class="wide">Imagem (URL)<input name="image_url" type="url" placeholder="https://..."></label>
+              <label class="upload-field wide">Ou envie imagem<input name="image_file" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
+              <label class="wide">Subtítulo (opcional)<textarea name="subtitle" rows="2" maxlength="300" placeholder="Uma frase em destaque logo abaixo da imagem."></textarea></label>
+              <div class="wide">
+                <span class="editor-label">Texto da notícia</span>
+                <div class="editor-toolbar" role="toolbar" aria-label="Formatação do texto">
+                  <select data-editor-command="fontName" aria-label="Fonte">
+                    <option value="Arial">Arial</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Manrope">Manrope</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                  </select>
+                  <select data-editor-command="fontSize" aria-label="Tamanho da fonte">
+                    <option value="2">Pequeno</option>
+                    <option value="3" selected>Normal</option>
+                    <option value="4">Grande</option>
+                    <option value="5">Muito grande</option>
+                    <option value="6">Título</option>
+                  </select>
+                  <button type="button" data-editor-command="bold" aria-label="Negrito"><strong>B</strong></button>
+                  <button type="button" data-editor-command="italic" aria-label="Itálico"><em>I</em></button>
+                  <button type="button" data-editor-command="underline" aria-label="Sublinhado"><u>U</u></button>
+                  <button type="button" data-editor-command="insertUnorderedList" aria-label="Lista com marcadores">• Lista</button>
+                  <button type="button" data-editor-command="insertOrderedList" aria-label="Lista numerada">1. Lista</button>
+                  <select data-editor-command="formatBlock" aria-label="Estilo do parágrafo">
+                    <option value="P">Parágrafo</option>
+                    <option value="H2">Título</option>
+                    <option value="H3">Subtítulo</option>
+                    <option value="BLOCKQUOTE">Citação</option>
+                  </select>
+                  <button type="button" data-editor-command="justifyLeft" aria-label="Alinhar à esquerda">⇤</button>
+                  <button type="button" data-editor-command="justifyCenter" aria-label="Centralizar">↔</button>
+                  <button type="button" data-editor-command="justifyRight" aria-label="Alinhar à direita">⇥</button>
+                  <label class="editor-color" title="Cor do texto">Cor<input data-editor-command="foreColor" type="color" value="#111111" aria-label="Cor do texto"></label>
+                </div>
+                <div id="article-body-editor" class="rich-editor" contenteditable="true" role="textbox" aria-label="Texto da notícia" aria-multiline="true" data-placeholder="Escreva sua notícia aqui. Selecione o texto para formatar."></div>
+              </div>
+              <label class="checkbox-label wide"><input name="is_published" type="checkbox"> Publicar notícia no site</label>
+            </div>
+            <details class="article-options">
+              <summary>Mais opções (categoria, endereço e anexo)</summary>
+              <div class="form-grid">
+                <label class="wide">Categoria<input name="category" maxlength="40" placeholder="Notícias"></label>
+                <label class="wide">Endereço da notícia<input name="article_slug" maxlength="150" pattern="[a-z0-9-]+" placeholder="Gerado automaticamente pelo título"></label>
+                <label class="upload-field wide">Anexo para download (PDF ou documento)<input name="attachment_file" type="file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label>
+                <label class="wide">Nome do anexo<input name="file_name" maxlength="120" placeholder="Ex.: Edital completo (opcional)"></label>
+              </div>
+            </details>
+            <div class="form-actions"><button class="admin-button" type="submit">Salvar notícia <span>✓</span></button><span class="form-message" id="article-message" role="status"></span></div>
+          </form>
+        </section>
+
+        <section class="admin-panel">
+          <div class="panel-heading"><div><span class="section-kicker">PUBLICADAS E RASCUNHOS</span><h2>Notícias cadastradas</h2></div><button class="admin-button secondary" id="refresh-articles" type="button">Atualizar ↻</button></div>
+          <p class="form-message" id="articles-message" role="status"></p>
+          <div class="admin-articles" id="admin-articles"></div>
+        </section>
+      </section>
+      <div class="toast" role="status" aria-live="polite"></div>
+    </main>
+    <script src="article-format.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
